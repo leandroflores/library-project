@@ -1,0 +1,54 @@
+package com.example.library.domain;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.time.LocalDate;
+
+@Entity
+@Table (name = "books")
+@Getter
+@Setter
+@NoArgsConstructor
+@EqualsAndHashCode
+public class Book {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @NotNull(message = "Title is required!")
+    @NotEmpty(message = "Title can not be empty!")
+    @Column(nullable = false)
+    private String title;
+
+    @NotNull(message = "Author is required!")
+    @NotEmpty(message = "Author can not be empty!")
+    @Column(nullable = false)
+    private String author;
+
+    @NotNull(message = "ISBN is required!")
+    @NotEmpty(message = "ISBN can not be empty!")
+    @Column(nullable = false)
+    private String isbn;
+
+    @NotNull(message = "Category is required!")
+    @NotEmpty(message = "Category can not be empty!")
+    @Column(nullable = false)
+    private String category;
+
+    @NotNull(message = "Publish date  is required!")
+    @NotEmpty(message = "Publish date  can not be empty!")
+    @PastOrPresent(message = "Publish date can not be a future date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
+    @Column(name = "publish_date", nullable = false)
+    private LocalDate publishDate;
+
+}
