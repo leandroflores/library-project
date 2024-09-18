@@ -48,7 +48,7 @@ public class LoanService {
         if (loanById.isPresent()) {
             Loan loanFound = loanById.get();
             loanFound.setStatus(LoanStatus.COMPLETED);
-            loanFound.setLoanDate(LocalDate.now().toString());
+            loanFound.setLoanDate(LocalDate.now());
             return Optional.of(repository.save(loanFound));
         }
         return Optional.empty();
