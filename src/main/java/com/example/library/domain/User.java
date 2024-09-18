@@ -43,7 +43,6 @@ public class User {
     private String phone;
 
     @NotNull(message = "Create at is required!")
-    @NotEmpty(message = "Create at can not be empty!")
     @PastOrPresent(message = "Date can not be a future date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "created_at", nullable = false)
