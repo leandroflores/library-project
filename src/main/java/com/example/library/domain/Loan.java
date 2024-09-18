@@ -28,7 +28,6 @@ public class Loan {
     private LoanStatus status;
 
     @NotNull(message = "Loan date  is required!")
-    @NotEmpty(message = "Loan date  can not be empty!")
     @PastOrPresent(message = "Loan date can not be a future date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "loan_date", nullable = false)
