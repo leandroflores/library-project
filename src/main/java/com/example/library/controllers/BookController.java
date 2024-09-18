@@ -3,13 +3,16 @@ package com.example.library.controllers;
 import com.example.library.domain.Book;
 import com.example.library.services.BookService;
 import com.example.library.services.google.BooksAPIService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +48,7 @@ public class BookController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Object> createBook(@RequestBody Book book) {
+    public ResponseEntity<Object> createBook(@Valid @RequestBody Book book) {
         try {
             Book newBook = service.createBook(book);
             return ResponseEntity.status(HttpStatus.CREATED).body(newBook);
@@ -81,6 +84,11 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(exception.getMessage());
         }
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Objects.requireNonNull(ex.getBindingResult().getFieldError()).getDefaultMessage());
     }
 
 }
