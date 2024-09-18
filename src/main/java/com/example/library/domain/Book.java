@@ -45,7 +45,6 @@ public class Book {
     private String category;
 
     @NotNull(message = "Publish date  is required!")
-    @NotEmpty(message = "Publish date  can not be empty!")
     @PastOrPresent(message = "Publish date can not be a future date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     @Column(name = "publish_date", nullable = false)
